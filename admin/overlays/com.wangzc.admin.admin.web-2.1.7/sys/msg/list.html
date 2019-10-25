@@ -1,0 +1,120 @@
+<#include "/common/form/header.html">
+<style>
+	.page-header {
+		display: none;
+	}
+	.msg-title {
+		font-size: 18px;
+	}
+</style>
+<script type="text/javascript">
+$(function() {
+	$(".paginate_button").click(function() {
+		if ($(this).hasClass("active")) {
+			return false;
+		}
+		if ($(this).hasClass("disabled")) {
+			return false;
+		}
+		$("input[name=page]").val($(this).find("a").attr("page"));
+		$(".list-search").click();
+		return false;
+	});
+});
+</script>
+<div class="row">
+	<form class="col-xs-12" style="margin-bottom: 8px" action="">
+		<input type="hidden" name="page" value=''>
+		<input type="hidden" name="menu" value='${RequestParameters["menu"]!}'>
+		<input type="text" placeholder="发送人" class="col-xs-2"  name="like_from_user_name" value='${RequestParameters["like_from_user_name"]!}'>
+		<input type="text" placeholder="标题" class="col-xs-2"  name="like_msg_level" value='${RequestParameters["like_msg_level"]!}'>
+		<div class="col-sm-1 no-padding"><select class="form-select form-control" name="eq_msg_read" value='${RequestParameters["eq_msg_read"]!}'>
+			<option value="">消息状态</option>
+			<option value="1">已读</option>
+			<option value="0">未读</option>
+		</select></div>
+		<div class="col-sm-1 no-padding"><select class="form-select form-control" name="eq_msg_level" value='${RequestParameters["eq_msg_level"]!}'>
+			<option value="">消息等级</option>
+			<option value="SUCCESS">成功</option>
+			<option value="INFO">普通</option>
+			<option value="WARNING">警告</option>
+			<option value="ERROR">失败</option>
+		</select></div>
+		<button class="btn btn-white list-search">
+			<i class="ace-icon fa fa-search"></i>查询</button>
+	</form>
+	<div class="col-xs-12">
+		<table id="simple-table" class="table  table-hover">
+			<thead>
+				<tr>
+					<th>消息标题</th>
+					<th>发送人姓名</th>
+					<th>消息等级</th>
+					<th>消息已读</th>
+					<th>消息读取时间</th>
+					<th>创建时间</th>
+				</tr>
+			</thead>
+	
+			<tbody>
+			<#list obj.list as r>
+				<tr>
+					<td><a href="#" class="msg-title" msg-id="${r.msg_id}"><b>${r.msg_title!}</b></a></td>
+					<td>${r.from_user_name!}</td>
+					<td>
+					<#if r.msg_level == "SUCCESS">
+						<span class="label label-success label-white middle">
+							<i class="ace-icon fa fa-comment"></i>
+						${r.msg_level}</span>
+					<#elseif r.msg_level == "INFO">
+						<span class="label label-info label-white middle">
+							<i class="ace-icon fa fa-flag"></i>
+						${r.msg_level}</span>
+					<#elseif r.msg_level == "WARNING">
+						<span class="label label-warning label-white middle">
+							<i class="ace-icon fa fa-warning"></i>
+						${r.msg_level}</span>
+					<#elseif r.msg_level == "ERROR">
+						<span class="label label-danger label-white middle">
+							<i class="ace-icon fa fa-circle-o-notch"></i>
+						${r.msg_level}</span>
+					</#if>
+					</td>
+					<td>
+					<#if r.msg_read == 1>
+					<span class="label label-success arrowed-in-right middle">已读</span>
+					<#else>
+					<span class="label arrowed-in-right middle">未读</span>
+					</#if>
+					</td>
+					<td>${r.msg_read_time!}</td>
+					<td>${r.create_time!}</td>
+				</tr>
+				</#list>
+			</tbody>
+		</table>
+	</div>
+	<script type="text/javascript">
+		$(function () {
+            $(".msg-title").click(function() {
+                var url = "${base}/sys/msg/read?msg_id=" + $(this).attr("msg-id");
+                layer.open({
+                    type: 2,
+                    title: '消息',
+                    shadeClose: true,
+                    shade: 0.8,
+                    area: ['50%', '80%'],
+                    content: url, //iframe的url
+                    end: function() {
+                        window.location.reload();
+                    }
+                });
+            });
+            $(".form-select").each(function () {
+				$.selected($(this), $(this).attr("value"));
+            });
+        });
+	</script>
+	<#include "/common/pager.html">
+</div><!-- /.row -->
+<#include "/common/form/footer.html">

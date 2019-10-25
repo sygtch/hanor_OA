@@ -1,0 +1,169 @@
+<#include "/common/form/header.html">
+					<div class="page-header">
+						<h1>
+							系统菜单
+							<small>
+								<i class="ace-icon fa fa-angle-double-right"></i>
+								<span class="form-head">新增</span>
+							</small>
+						</h1>
+					</div><!-- /.page-header -->
+					<div class="row">
+						<div class="col-xs-12">
+							<!-- PAGE CONTENT BEGINS -->
+							<form class="form-horizontal" role="form" method="post" action="${base}/sys/menu/add">
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right">菜单名称</label>
+									<div class="col-sm-9">
+										<input type="text" name="menu_name" placeholder="菜单名称" class="col-sm-5 form-input" validate="required"/>
+										<span class="help-inline col-xs-12 col-sm-5">必填</span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right">菜单链接</label>
+									<div class="col-sm-9">
+										<input type="text" name="menu_uri" placeholder="菜单链接" class="col-sm-5 form-input" validate="required"/>
+										<span class="help-inline col-xs-12 col-sm-5">必填</span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right">菜单图标</label>
+									<div class="col-sm-9">
+										<select class="col-sm-5 form-select form-input" name="menu_icon" validate="required">
+											<option value="fa-caret-right">默认</option>
+											<option>fa-adjust</option>
+											<option>fa-asterisk</option>
+											<option>fa-ban</option>
+											<option>fa-bar-chart-o</option>
+											<option>fa-barcode</option>
+											<option>fa-flask</option>
+											<option>fa-beer</option>
+											<option>fa-bell-o</option>
+											<option>fa-bell</option>
+											<option>fa-bolt</option>
+											<option>fa-book</option>
+											<option>fa-bookmark</option>
+											<option>fa-bookmark-o</option>
+											<option>fa-briefcase</option>
+											<option>fa-bullhorn</option>
+											<option>fa-calendar</option>
+											<option>fa-camera</option>
+											<option>fa-camera-retro</option>
+											<option>fa-certificate</option>
+											<option>fa-check-square-o</option>
+											<option>fa-square-o</option>
+											<option>fa-circle</option>
+											<option>fa-circle-o</option>
+											<option>fa-cloud</option>
+											<option>fa-cloud-download</option>
+											<option>fa-cloud-upload</option>
+											<option>fa-coffee</option>
+											<option>fa-cog</option>
+											<option>fa-cogs</option>
+											<option>fa-comment</option>
+											<option>fa-comment-o</option>
+											<option>fa-comments</option>
+											<option>fa-comments-o</option>
+											<option>fa-credit-card</option>
+											<option>fa-tachometer</option>
+											<option>fa-desktop</option>
+											<option>fa-arrow-circle-o-down</option>
+											<option>fa-download</option>
+											<option>fa-pencil-square-o</option>
+											<option>fa-envelope</option>
+											<option>fa-envelope-o</option>
+											<option>fa-exchange</option>
+											<option>fa-exclamation-circle</option>
+											<option>fa-external-link</option>
+											<option>fa-eye-slash</option>
+											<option>fa-eye</option>
+											<option>fa-video-camera</option>
+											<option>fa-fighter-jet</option>
+											<option>fa-film</option>
+											<option>fa-filter</option>
+											<option>fa-fire</option>
+											<option>fa-flag</option>
+											<option>fa-folder</option>
+											<option>fa-folder-open</option>
+											<option>fa-folder-o</option>
+											<option>fa-folder-open-o</option>
+											<option>fa-cutlery</option>
+											<option>fa-gift</option>
+											<option>fa-glass</option>
+											<option>fa-globe</option>
+											<option>fa-users</option>
+											<option>fa-hdd-o</option>
+											<option>fa-headphones</option>
+											<option>fa-heart</option>
+											<option>fa-heart-o</option>
+											<option>fa-home</option>
+											<option>fa-inbox</option>
+											<option>fa-info-circle</option>
+											<option>fa-key</option>
+											<option>fa-leaf</option>
+											<option>fa-laptop</option>
+											<option>fa-gavel</option>
+											<option>fa-lemon-o</option>
+											<option>fa-lightbulb-o</option>
+											<option>fa-lock</option>
+											<option>fa-unlock</option>
+										</select>
+										<button type="button" class="btn btn-xs btn-white"><i class="ace-icon fa fa-list" id="menu_icon"></i></button>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right">菜单父级</label>
+									<div class="col-sm-9">
+										<select class="col-sm-5 form-select form-input" name="menu_parent" url="${base}/sys/menu/select" n="menu_name" v="menu_id" validate="required">
+											<option value="0">一级菜单</option>
+										</select>
+										<span class="help-inline col-xs-12 col-sm-5">必填</span>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right">权限</label>
+									<div class="col-sm-9">
+										<select class="col-sm-5 form-select form-input" name="permission_id" url="${base}/sys/permission/select" n="permission_name" v="permission_id">
+										<option value="">无</option>
+										</select>
+										<span class="help-inline col-xs-12 col-sm-5">必填</span>
+									</div>
+								</div>
+								
+								
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right">排序</label>
+									<div class="col-sm-9">
+										<input type="text" name="menu_sort" placeholder="排序" class="col-sm-5 form-input"/>
+									</div>
+								</div>
+								
+								<div class="clearfix form-actions">
+									<div class="col-md-offset-3 col-md-9">
+										<button class="btn btn-white btn-info form-submit" type="button">
+											<i class="ace-icon fa fa-check bigger-110"></i>
+											提交
+										</button>
+										&nbsp; &nbsp; &nbsp;
+										<button class="btn btn-white" type="reset">
+											<i class="ace-icon fa fa-undo bigger-110"></i>
+											重置
+										</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<script>
+						$(function() {
+							$("select[name=menu_icon]").change(function() {
+								$("#menu_icon").removeClass();
+								$("#menu_icon").addClass("ace-icon");
+								$("#menu_icon").addClass("fa");
+								$("#menu_icon").addClass($(this).val());
+							});
+							$("select[name=menu_icon]").change();
+						});
+					</script>
+<#include "/common/form/footer.html">

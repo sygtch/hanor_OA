@@ -1,0 +1,201 @@
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+			<#include "/common/footer-icon.html">
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+				<script src="${base}/assets/js/common2.js"></script>
+				<!-- page specific plugin scripts -->
+				<script src="${base}/assets/js/jquery-ui.min.js"></script>
+				<script src="${base}/assets/js/jquery.ui.touch-punch.min.js"></script>
+		<script>
+		var isReload = false;
+			$(function() {
+			    $("form").submit(function () {
+					layer.load(1);
+                });
+				$(".form-submit").click(function() {
+					$(this).parents().submit();
+					return false;
+				});
+				$(".list-open").click(function() {
+					layer.open({
+						  type: 2,
+						  title: $(this).text(),
+						  shadeClose: true,
+						  shade: 0.8,
+						  area: ['80%', '96%'],
+						  content: $(this).attr("data-url"), //iframe的url
+						  end: function() {
+							  if (isReload) {
+								  window.location.reload();
+							  }
+						  }
+						});
+					return false;
+				});
+				$(".list-delete").click(function() {
+					var url = $(this).attr("data-url");
+                    layer.confirm('确定要删除吗？', {
+                        icon: 0,
+                        btn: ['确定','关闭'] //按钮
+                    }, function(){
+                        $.send({
+							url: url,
+							success: function(data){
+                                layer.msg(data.msg, {
+                                    time: 800,
+                                    end: function() {
+                                        if (1 == data.code) {
+                                            location.reload();
+                                        }
+                                    }
+                                });
+                            }
+						});
+                    }, function(){
+                    });
+					return false;
+				});
+				//分页按钮点击
+				$(".paginate_button").click(function() {
+					if ($(this).hasClass("active")) {
+						return false;
+					}
+					if ($(this).hasClass("disabled")) {
+						return false;
+					}
+					$("input[name=page]").val($(this).find("a").attr("page"));
+					$("form").submit();
+					return false;
+				});
+
+				//初始化时间选择组件
+				$('.form-datetime').datetimepicker({
+					 format: 'YYYY-MM-DD HH:mm:ss',//use this option to display seconds
+					 icons: {
+						time: 'fa fa-clock-o',
+						date: 'fa fa-calendar',
+						up: 'fa fa-chevron-up',
+						down: 'fa fa-chevron-down',
+						previous: 'fa fa-chevron-left',
+						next: 'fa fa-chevron-right',
+						today: 'fa fa-arrows ',
+						clear: 'fa fa-trash',
+						close: 'fa fa-times'
+					 }
+				}).next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				});
+				//初始化下拉列表
+				$(".form-select").each(function() {
+					var _select = $(this);
+					var value = _select.attr("value");
+					var url = _select.attr("url");
+					if ($.isBlank(url)) {
+                        $.selected(_select, value);
+					} else {
+                        $.send({
+                            url: url,
+                            success: function(data) {
+                                for (var i in data) {
+                                    _select.append("<option value='" + data[i][_select.attr("v")] + "'>" + data[i][_select.attr("n")] + "</option>");
+                                }
+                                $.selected(_select, value);
+                            }
+                        });
+					}
+				});
+				//消息菜单点击
+                $(".msg-open").click(function() {
+                    var url = "${base}/sys/msg/list";
+                    if ($(this).hasClass("msg-success")) {
+                        url += "?eq_msg_read=0&eq_msg_level=SUCCESS";
+                    }
+                    if ($(this).hasClass("msg-info")) {
+                        url += "?eq_msg_read=0&eq_msg_level=INFO";
+                    }
+                    if ($(this).hasClass("msg-warning")) {
+                        url += "?eq_msg_read=0&eq_msg_level=WARNING";
+                    }
+                    if ($(this).hasClass("msg-danger")) {
+                        url += "?eq_msg_read=0&eq_msg_level=ERROR";
+                    }
+                    layer.open({
+                        type: 2,
+                        title: '消息',
+                        shadeClose: true,
+                        shade: 0.8,
+                        area: ['70%', '90%'],
+                        content: url, //iframe的url
+                        end: function() {
+                            window.location.reload();
+                        }
+                    });
+                    return false;
+                });
+                //初始化查询
+				(function () {
+                    var data = [];
+                <@param>
+                    data.push({
+                        name: "${param.name!}",
+                        value: "${param.value!}",
+                        display: ${param.display}
+                    });
+                </@param>
+					for (var i in data) {
+					    var param = data[i];
+					    if ($.isBlank(param.value))
+					        continue;
+					    var input = $("input[name=" + param.name + "]");
+					    if (0 == input.size())
+					        input = $("select[name=" + param.name + "]");
+					    if (0 < input.size())
+					        continue;
+					    var type = param.display ? "text" : "hidden";
+					    $(".list-search").before("<input class='col-xs-1' placeholder='" + param.name + "' type='" + type + "' name='" + param.name + "' value='" + param.value + "'>");
+					}
+                })();
+				//初始化排序
+				$("#simple-table th").each(function () {
+					var name = $(this).attr("name");
+					if ($.isBlank(name))
+					    return true;
+					var asc = $("input[name=asc_" + name + "]");
+					var desc = $("input[name=desc_" + name + "]");
+					if (0 < asc.size()) {
+					    $(this).append("<span class='list-sort fa fa-sort-asc pull-right'></span>");
+					} else if (0 < desc.size()) {
+                        $(this).append("<span class='list-sort fa fa-sort-desc pull-right'></span>");
+					} else {
+                        $(this).append("<span class='list-sort fa fa-sort pull-right'></span>");
+					}
+					$(this).click(function () {
+						var span = $(this).find(".list-sort");
+						var pre = "";
+						if (span.hasClass("fa-sort")) {
+						    pre = "asc_";
+						} else if (span.hasClass("fa-sort-asc")) {
+						    pre = "desc_";
+						} else if (span.hasClass("fa-sort-desc")) {
+						    pre = "asc_";
+						} else {
+						    return false;
+						}
+						$("form input").each(function () {
+						    var name = $(this).attr("name");
+							if (!$.isBlank(name) && (-1 < name.indexOf("asc_") || -1 < name.indexOf("desc_")))
+							    $(this).remove();
+                        });
+                        $(".list-search").before("<input type='hidden' name='" + pre + name + "' value='1'>");
+                        $("form").submit();
+                    });
+					$(this).addClass("mouse-hand");
+                });
+			});
+		</script>
+	</body>
+</html>

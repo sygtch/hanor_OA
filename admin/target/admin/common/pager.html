@@ -1,0 +1,74 @@
+<#if obj.pager??>
+<#if 0 lt obj.pager.pageCount>
+<div class="col-xs-12">
+	<div class="dataTables_paginate paging_simple_numbers center"
+		id="dynamic-table_paginate">
+		<ul class="pagination">
+			<li class="paginate_button previous <#if obj.pager.pageNumber == 1>disabled</#if>">
+				<a href="javascript:void(0)" page="1">首页</a>
+			</li>
+			<li class="paginate_button previous <#if obj.pager.pageNumber == 1>disabled</#if>">
+				<a href="javascript:void(0)" page="${obj.pager.pageNumber - 1}">上一页</a>
+			</li>
+			<#assign psi = 1>
+			<#assign pei = 10>
+			<#if obj.pager.pageCount gt 10>
+				<#assign psi = obj.pager.pageNumber - 4>
+				<#assign pei = obj.pager.pageNumber + 4>
+				<#if psi lt 1>
+					<#assign pei = pei + (1 - psi)>
+					<#assign psi = 1>
+				</#if>
+				<#if pei gt obj.pager.pageCount>
+					<#assign psi = psi - (pei - obj.pager.pageCount)>
+					<#assign pei = obj.pager.pageCount>
+				</#if>
+			<#else>
+				<#assign pei = obj.pager.pageCount>
+			</#if>
+			<#if psi gt 1>
+			<li class="disabled">
+				<a href="javascript:void(0)">···</a>
+			</li>
+			</#if>
+			<#list psi..pei as i> 
+			<#if i != obj.pager.pageNumber>
+			<li class="paginate_button">
+				<a href="javascript:void(0)" page="${i}">${i}</a>
+			</li>
+			<#else>
+			<li class="paginate_button active">
+				<a href="javascript:void(0)" page="${i}">${i}</a>
+			</li>
+			</#if> 
+			</#list>
+			<#if pei lt obj.pager.pageCount>
+			<li class="disabled">
+				<a href="javascript:void(0)">···</a>
+			</li>
+			</#if>
+			<li class="paginate_button next <#if obj.pager.pageNumber == obj.pager.pageCount>disabled</#if>">
+				<a href="javascript:void(0)" page="${obj.pager.pageNumber + 1}">下一页</a>
+			</li>
+			<li class="paginate_button previous <#if obj.pager.pageNumber == obj.pager.pageCount>disabled</#if>">
+				<a href="javascript:void(0)" page="${obj.pager.pageCount}">尾页</a>
+			</li>
+			<#assign cccc=(obj.pager.pageNumber-1)*obj.pager.pageSize+1>
+			<#assign dddd=(obj.pager.pageNumber)*obj.pager.pageSize>
+			<#if dddd gt obj.pager.recordCount>
+				<#assign dddd=obj.pager.recordCount>
+			</#if>
+			<li>
+				<span style="color: #999">显示&nbsp;${cccc}&nbsp;-&nbsp;${dddd}&nbsp;&nbsp;共&nbsp;${obj.pager.recordCount}&nbsp;条记录</span>
+			</li>
+		</ul>
+	</div>
+</div>
+<#else>
+<div class="col-xs-12">
+	<div class="dataTables_paginate paging_simple_numbers center"
+		id="dynamic-table_paginate">
+<span style="color:red; font-size: 20px">没有查到相关数据</span>
+</div></div>
+</#if>
+</#if>

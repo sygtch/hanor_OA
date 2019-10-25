@@ -1,0 +1,10 @@
+<#include "/common/header.html">
+    <div class="row">
+        <iframe id="iframe-druid" src="${base}/druid" class="col-sm-12 no-border"></iframe>
+    </div><!-- /.col -->
+    <script>
+        $(function () {
+            $.autoHeight({selector: $("#iframe-druid")});
+        });
+    </script>
+    <#include "/common/footer.html">
