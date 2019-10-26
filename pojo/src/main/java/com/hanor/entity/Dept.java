@@ -3,12 +3,7 @@ package com.hanor.entity;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-import org.nutz.dao.entity.annotation.ColDefine;
-import org.nutz.dao.entity.annotation.ColType;
-import org.nutz.dao.entity.annotation.Column;
-import org.nutz.dao.entity.annotation.Comment;
-import org.nutz.dao.entity.annotation.Id;
-import org.nutz.dao.entity.annotation.Table;
+import org.nutz.dao.entity.annotation.*;
 
 /**
  * dept实体
@@ -44,7 +39,8 @@ public class Dept implements Serializable{
 	@Comment("部门编号")
 	@ColDefine(type = ColType.INT,width = 8,notNull = true)
     private Integer dept_id;
-    
+
+	@Name
 	@Column
 	@Comment("部门名称")
 	@ColDefine(type = ColType.VARCHAR,width = 255)

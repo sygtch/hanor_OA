@@ -17,5 +17,6 @@ import org.nutz.mvc.ioc.provider.ComboIocProvider;
 @Ok(HtmlViewMaker.VIEW_HTML)
 @Localization(value = "msg/", defaultLocalizationKey = "zh-CN")
 public class MainModule {
+
     public static final String GROUP_SCAN = "com.hanor.oa";
 }

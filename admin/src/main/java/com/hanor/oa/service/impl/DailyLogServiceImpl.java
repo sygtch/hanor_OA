@@ -9,6 +9,7 @@ import com.wangzc.mvc.entity.SysUserRole;
 import com.wangzc.mvc.utils.SysUtils;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
+import org.nutz.dao.sql.Criteria;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 import java.text.SimpleDateFormat;

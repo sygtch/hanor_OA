@@ -17,7 +17,6 @@ public class StaffLoginFilter extends AuthenticationFilter {
     protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
         Dao dao = SysUtils.ioc().get(Dao.class,"dao");
         Integer user_id = (Integer) subject.getPrincipal();
-
         if (null == user_id || user_id <= 0){
             return false;
         }
