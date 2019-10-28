@@ -3,7 +3,12 @@
 	<form class="col-xs-12" style="margin-bottom: 8px" action="">
 		<input type="hidden" name="page" value=''>
 		<input type="hidden" name="menu" value='${RequestParameters["menu"]!}'>
-		<input type="text" placeholder="请设置查询条件" class="col-xs-1"  name="eq_params" value='${RequestParameters["eq_params"]!}'>
+	<@roles rs='admin'>
+		<input type="text" placeholder="用户名查询" class="col-xs-1"  name="eq_user_name" value='${RequestParameters["eq_user_name"]!}'><div><input type="text" placeholder="日期搜索" name="eq_create_time" class="col-sm-1 form-datetime" value='${RequestParameters["eq_create_time"]!}'></div>
+		<select class="col-sm-5 form-select form-input" name="dept_id" url="${base}/dept/select" n="dept_name" v="dept_id">
+			<option>全部</option>
+		</select>
+	</@roles>
 		<button class="btn btn-white list-search">
 			<i class="ace-icon fa fa-search"></i>查询</button>
 		<button class="btn btn-white btn-success list-open" type="button" data-url="${base}/daily/log/add.html">
@@ -23,9 +28,8 @@
 				<tr>
 					<th name="log_date">日期</th>
 					<th name="user_name">员工账户名称</th>
-					<th name="dept_id">所属部门编号</th>
 					<th name="dept_name">部门名称</th>
-					<th name="log_title">工作日志标题</th>
+					<th name="log_title">日志标题</th>
 					<th name="create_time">创建时间</th>
 					<th>操作</th>
 				</tr>
@@ -36,7 +40,6 @@
 				<tr>
 					<td>${r.log_date!}</td>
 					<td>${r.user_name!}</td>
-					<td>${r.dept_id!}</td>
 					<td>${r.dept_name!}</td>
 					<td>${r.log_title!}</td>
 					<td>${r.create_time!}</td>

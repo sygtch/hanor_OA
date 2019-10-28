@@ -9,7 +9,7 @@ import com.wangzc.mvc.entity.SysUserRole;
 import com.wangzc.mvc.utils.SysUtils;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
-import org.nutz.dao.sql.Criteria;
+import org.nutz.dao.sql.OrderBy;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 import java.text.SimpleDateFormat;
@@ -32,17 +32,22 @@ public class DailyLogServiceImpl implements DailyLogService {
         for (SysUserRole sysUserRole :userRoles){
             roleSet.add(sysUserRole.getRole_id());
         }
+
+        Cnd cnd = SysUtils.autoCnd(DailyLog.class);
         //管理员权限
         if (roleSet.contains(SysConfig.SYS_ROLE)){
-            return Result.pagerList(DailyLog.class, SysUtils.autoCnd(DailyLog.class));
+            cnd.orderBy("create_time","desc");
+            return Result.pagerList(DailyLog.class, cnd);
         }
         //部门经理权限
         if (roleSet.contains(Constants.DEPT_ROLE)){
-            return Result.pagerList(DailyLog.class, SysUtils.autoCnd(DailyLog.class).and("dept_id","=",dept_Id));
+            cnd.and("dept_id","=",dept_Id).orderBy("create_time","desc");
+            return Result.pagerList(DailyLog.class, cnd);
         }
         //普通员工权限
         if (roleSet.contains(Constants.USER_ROLE)){
-            return Result.pagerList(DailyLog.class, SysUtils.autoCnd(DailyLog.class).and("sys_user_id","=",user_id));
+            cnd.and("sys_user_id","=",user_id).orderBy("create_time","desc");
+            return Result.pagerList(DailyLog.class, cnd);
         }
         return Result.fail("无访问权限");
     }

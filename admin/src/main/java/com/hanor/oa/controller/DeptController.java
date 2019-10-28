@@ -25,10 +25,10 @@ public class DeptController extends BaseController {
 	@At
 	@GET
 	@RequiresPermissions("dept.list")
-	@Desc("dept.列表")
+	@Desc("dept.下拉列表")
 	@Ok(HtmlViewMaker.VIEW_JSON)
 	public Object select(){
-		return dao.query(Dept.class, SysUtils.autoCnd(Dept.class));
+		return dao.query(Dept.class, SysUtils.autoCnd(Dept.class).orderBy("sort_no","asc"));
 	}
 
 	@At

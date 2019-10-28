@@ -12,6 +12,8 @@ import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
+import org.nutz.trans.Atom;
+import org.nutz.trans.Trans;
 
 import java.util.List;
 
@@ -45,12 +47,17 @@ public class DeptServiceImpl implements DeptService {
         if (StringUtils.isEmpty(dept.getDept_name())){
             return Result.fail("没有部门名称，无法添加");
         }
+        int deptIsExist = dao.count(Staff.class,Cnd.where("dept_name","=",dept.getDept_name()));
+        if (deptIsExist > 0){
+            return Result.fail("部门名称重复");
+        }
         dept.setCreate_time(SysUtils.current());
         dao.insert(dept);
         return Result.ok("部门添加成功");
     }
 
     @Override
+
     public Object edit(Dept dept) {
         if (null == dept){
             return Result.fail("部门信息不全，无法修改");
@@ -61,7 +68,21 @@ public class DeptServiceImpl implements DeptService {
         if (StringUtils.isEmpty(dept.getDept_name())){
             return Result.fail("没有部门名称，无法修改");
         }
-        dao.updateIgnoreNull(dept);
+        List<Staff> staffList = dao.query(Staff.class,Cnd.where("dept_id","=",dept.getDept_id()));
+        for (Staff staff : staffList){
+            staff.setDept_name(dept.getDept_name());
+        }
+        Trans.exec(
+                new Atom() {
+                    @Override
+                    public void run() {
+                        dao.updateIgnoreNull(dept);
+                        dao.updateIgnoreNull(staffList);
+                    }
+                }
+        );
+
+
         return Result.ok("部门修改成功");
     }
 

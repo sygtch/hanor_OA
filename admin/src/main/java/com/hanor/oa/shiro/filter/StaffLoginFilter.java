@@ -1,7 +1,8 @@
-package com.hanor.oa.filter;
+package com.hanor.oa.shiro.filter;
 
 import com.hanor.entity.Staff;
 import com.hanor.oa.base.Constants;
+import com.hanor.oa.shiro.token.CaptchaInToken;
 import com.wangzc.mvc.shiro.filter.AuthenticationFilter;
 import com.wangzc.mvc.utils.SysUtils;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -20,6 +21,7 @@ public class StaffLoginFilter extends AuthenticationFilter {
         if (null == user_id || user_id <= 0){
             return false;
         }
+        //取出当前用户的员工信息
         Staff staff = dao.fetch(Staff.class, Cnd.where(Staff.SYS_USER_ID,"=",user_id));
         if (staff != null){
             ((HttpServletRequest) request).getSession().setAttribute(Constants.USER_NAME, staff.getStaff_name());
@@ -28,5 +30,15 @@ public class StaffLoginFilter extends AuthenticationFilter {
         }
 
         return super.onLoginSuccess(token, subject, request, response);
+    }
+
+    @Override
+    protected AuthenticationToken createToken(String username, String password, ServletRequest request, ServletResponse response) {
+
+        boolean rememberMe = isRememberMe(request);
+        String host = getHost(request);
+        String captchaCode = request.getParameter("captcha");
+        //使用自定义token
+        return new CaptchaInToken(username, password, host, rememberMe, captchaCode);
     }
 }

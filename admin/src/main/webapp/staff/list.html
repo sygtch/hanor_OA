@@ -3,7 +3,15 @@
 	<form class="col-xs-12" style="margin-bottom: 8px" action="">
 		<input type="hidden" name="page" value=''>
 		<input type="hidden" name="menu" value='${RequestParameters["menu"]!}'>
-		<input type="text" placeholder="请设置查询条件" class="col-xs-1"  name="eq_params" value='${RequestParameters["eq_params"]!}'>
+		<input type="text" placeholder="搜索员工名" class="col-xs-1"  name="like_staff_name" value='${RequestParameters["like_staff_name"]!}'>
+		<input type="text" placeholder="搜索员工电话" class="col-xs-1"  name="eq_staff_phone" value='${RequestParameters["eq_staff_phone"]!}'>
+		<select class="col-sm-5 form-select form-input" name="staff_type" url="${base}/staff/select" n="role_name" v="role_id">
+			<option>全部</option>
+		</select>
+
+		<select class="col-sm-5 form-select form-input" name="dept_id" url="${base}/dept/select" n="dept_name" v="dept_id">
+			<option>全部</option>
+		</select>
 		<button class="btn btn-white list-search">
 			<i class="ace-icon fa fa-search"></i>查询</button>
 		<button class="btn btn-white btn-success list-open" type="button" data-url="${base}/staff/add.html">
@@ -40,7 +48,8 @@
 					<td>${r.staff_name!}</td>
 					<td>${r.staff_account!}</td>
 					<td>${r.staff_phone!}</td>
-					<td>${r.staff_type!}</td>
+					<td><#if r.staff_type == "staff">员工</#if>
+						<#if r.staff_type == "dept">部门经理</#if></td>
 					<td>${r.dept_id!}</td>
 					<td>${r.dept_name!}</td>
 					<td>${r.create_time!}</td>
@@ -51,7 +60,7 @@
 <!--							<i class="ace-icon fa fa-trash-o"></i>删除</button>-->
 <!--					</td>-->
 				</tr>
-				</#list>
+			</#list>
 			</tbody>
 		</table>
 	</div>
