@@ -35,7 +35,7 @@ public class DeptController extends BaseController {
 	@GET
 	@RequiresPermissions("dept.list")
 	@Desc("dept.列表")
-	public Object list(@Attr(scope= Scope.SESSION, value= SysConfig.SYS_USER_ID)int user_id) {
+	public Object list(@Attr(scope= Scope.SESSION, value= SysConfig.SYS_USER_ID)int user_id) throws AlertException {
 		return deptService.list(user_id);
 	}
 
@@ -71,7 +71,7 @@ public class DeptController extends BaseController {
 	@RequiresPermissions("dept.delete")
 	@Desc("dept.删除")
 	@Ok(HtmlViewMaker.VIEW_JSON)
-	public Object delete(@Param("dept_id") Integer dept_id) {
+	public Object delete(@Param("dept_id") Integer dept_id) throws AlertException {
 		return deptService.delete(dept_id);
 	}
 

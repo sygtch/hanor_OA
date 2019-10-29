@@ -28,7 +28,7 @@ public class DailyLogController extends BaseController {
 	@RequiresPermissions("daily.log.list")
 	@Desc("daily_log.列表")
 	public Object list(@Attr(scope= Scope.SESSION, value= SysConfig.SYS_USER_ID)int staff_id,
-					   @Attr(scope= Scope.SESSION, value= Constants.DEPT_ID)int dept_id) {
+					   @Attr(scope= Scope.SESSION, value= Constants.DEPT_ID)int dept_id) throws AlertException {
 		return dailyLogService.list(staff_id,dept_id);
 	}
 

@@ -1,6 +1,7 @@
 package com.hanor.oa.service;
 
 import com.hanor.entity.Staff;
+import com.wangzc.mvc.exception.AlertException;
 
 public interface StaffService {
 
@@ -11,5 +12,5 @@ public interface StaffService {
      * @param staff
      * @return
      */
-    Object addStaff(Staff staff);
+    Object addStaff(Staff staff) throws AlertException;
 }

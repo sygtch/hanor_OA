@@ -6,6 +6,7 @@ import com.hanor.oa.service.DailyLogService;
 import com.wangzc.mvc.config.SysConfig;
 import com.wangzc.mvc.data.Result;
 import com.wangzc.mvc.entity.SysUserRole;
+import com.wangzc.mvc.exception.AlertException;
 import com.wangzc.mvc.utils.SysUtils;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
@@ -23,10 +24,10 @@ public class DailyLogServiceImpl implements DailyLogService {
     private Dao dao;
 
     @Override
-    public Object list(Integer user_id,Integer dept_Id) {
+    public Object list(Integer user_id,Integer dept_Id) throws AlertException {
         List<SysUserRole> userRoles= dao.query(SysUserRole.class, Cnd.where("user_id","=",user_id));
         if (null == userRoles){
-            return Result.fail("无日志访问权限");
+            throw new AlertException("无日志访问权限");
         }
         Set<String> roleSet = new HashSet<>();
         for (SysUserRole sysUserRole :userRoles){
@@ -49,14 +50,14 @@ public class DailyLogServiceImpl implements DailyLogService {
             cnd.and("sys_user_id","=",user_id).orderBy("create_time","desc");
             return Result.pagerList(DailyLog.class, cnd);
         }
-        return Result.fail("无访问权限");
+        throw new AlertException("无访问权限");
     }
 
     @Override
-    public Object add(DailyLog dailyLog) {
+    public Object add(DailyLog dailyLog) throws AlertException {
 
         if (null == dailyLog.getDept_id() || null == dailyLog.getDept_name() || null == dailyLog.getUser_name()){
-            return Result.fail("无添加日志权限");
+            throw new AlertException("非员工账户登录，不可添加工作日志");
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 

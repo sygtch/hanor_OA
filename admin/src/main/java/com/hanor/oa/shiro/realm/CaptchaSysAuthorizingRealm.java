@@ -27,7 +27,7 @@ public class CaptchaSysAuthorizingRealm extends SysAuthorizingRealm {
 
         //ip验证
         if (StringUtils.isEmpty(requestIP)){
-            throw new IpErrorException("非法ip");
+            throw new IpErrorException("无ip请求");
         }
         if (StringUtils.isEmpty(captchaInToken.getUsername())){
             throw new IpErrorException("非法用户");

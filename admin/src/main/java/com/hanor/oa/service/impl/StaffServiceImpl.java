@@ -25,37 +25,32 @@ public class StaffServiceImpl implements StaffService {
     private Dao dao;
 
     @Override
-    public Object addStaff(Staff staff) {
+    public Object addStaff(Staff staff) throws AlertException {
 
         List<Dept> depts = dao.query(Dept.class,null);
         if (depts.size() <= 0){
-            return Result.fail("请先添加至少一个部门");
+            throw new AlertException("请先添加至少一个部门");
         }
         if (null == staff){
-            return Result.fail("无添加信息，请确认");
+            throw new AlertException("无添加信息，请确认");
         }
         if (StringUtils.isEmpty(staff.getStaff_name())){
-            return Result.fail("无员工姓名");
+            throw new AlertException("无员工姓名");
         }
         if (StringUtils.isEmpty(staff.getStaff_account())){
-            return Result.fail("无员工账户");
+            throw new AlertException("无员工账户");
         }
         if (StringUtils.isEmpty(staff.getStaff_phone())){
-            return Result.fail("无员工电话");
+            throw new AlertException("无员工电话");
         }
         if (StringUtils.isEmpty(staff.getStaff_type())){
-            return Result.fail("无员工类型");
+            throw new AlertException("无员工类型");
         }
         if (null == staff.getDept_id() || 0 == staff.getDept_id()){
-            return Result.fail("无部门id");
+            throw new AlertException("无部门id");
         }
-        SysUser sysUser = null;
-        try {
-            //将员工账号/名字/密码等加入sys_user表
-            sysUser = sysUserService.addUser(staff.getStaff_account(),staff.getStaff_name(),"123456");
-        } catch (AlertException e) {
-            e.printStackTrace();
-        }
+        //将员工账号/名字/密码等加入sys_user表
+        SysUser sysUser = sysUserService.addUser(staff.getStaff_account(),staff.getStaff_name(),"123456");
         Dept dept = dao.fetch(Dept.class,staff.getDept_id());
 
         staff.setDept_name(dept.getDept_name());

@@ -6,6 +6,7 @@ import com.hanor.oa.util.CheckTools;
 import com.hanor.oa.util.StringUtils;
 import com.wangzc.mvc.data.Result;
 import com.wangzc.mvc.entity.SysUser;
+import com.wangzc.mvc.exception.AlertException;
 import com.wangzc.mvc.utils.SysUtils;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
@@ -18,21 +19,21 @@ public class WhiteListServiceImpl implements WhiteListService {
     private Dao dao;
 
     @Override
-    public Object add(WhiteList whiteList) {
+    public Object add(WhiteList whiteList) throws AlertException {
         if (null == whiteList){
-            return Result.fail("无白名单信息，暂时无法添加");
+            throw new AlertException("无白名单信息，暂时无法添加");
         }
         if (null == whiteList.getSys_user_id() || 0 >= whiteList.getSys_user_id()){
-            return Result.fail("无用户id");
+            throw new AlertException("无用户id");
         }
         if (StringUtils.isEmpty(whiteList.getWhite_ips())){
-            return Result.fail("无用户ip");
+            throw new AlertException("无用户ip");
         }
         //输入ip校验
         String[] ipsInput = whiteList.getWhite_ips().split(",");
         for (String ipEach :ipsInput){
             if (!CheckTools.ipCheck(ipEach)){
-                return Result.fail("存在非法IP，请核对");
+                throw new AlertException("存在非法IP，请核对");
             }
         }
 
@@ -54,21 +55,21 @@ public class WhiteListServiceImpl implements WhiteListService {
     }
 
     @Override
-    public Object edit(WhiteList whiteList) {
+    public Object edit(WhiteList whiteList) throws AlertException {
         if (null == whiteList){
-            return Result.fail("无白名单信息，暂时无法添加");
+            throw new AlertException("无白名单信息，暂时无法添加");
         }
         if (null == whiteList.getSys_user_id() || 0 >= whiteList.getSys_user_id()){
-            return Result.fail("无用户id");
+            throw new AlertException("无用户id");
         }
         if (StringUtils.isEmpty(whiteList.getWhite_ips())){
-            return Result.fail("无用户ip");
+            throw new AlertException("无用户ip");
         }
         //输入ip校验
         String[] ipsInput = whiteList.getWhite_ips().split(",");
         for (String ipEach :ipsInput){
             if (!CheckTools.ipCheck(ipEach)){
-                return Result.fail("存在非法IP，请核对");
+                throw new AlertException("存在非法IP，请核对");
             }
         }
         dao.updateIgnoreNull(whiteList);

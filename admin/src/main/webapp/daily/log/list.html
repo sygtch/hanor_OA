@@ -4,11 +4,15 @@
 		<input type="hidden" name="page" value=''>
 		<input type="hidden" name="menu" value='${RequestParameters["menu"]!}'>
 	<@roles rs='admin'>
-		<input type="text" placeholder="用户名查询" class="col-xs-1"  name="like_user_name" value='${RequestParameters["like_user_name"]!}'><div><input type="text" placeholder="日期搜索" name="eq_create_time" class="col-sm-1 form-datetime" value='${RequestParameters["eq_create_time"]!}'></div>
+		<input type="text" placeholder="用户名查询" class="col-xs-1"  name="like_user_name" value='${RequestParameters["like_user_name"]!}'>
 		<select class="col-sm-5 form-select form-input" name="eq_dept_id" url="${base}/dept/select" n="dept_name" v="dept_id" style="width: 120px">
-			<option value="">全部</option>
+			<option value="">全部部门</option>
 		</select>
 	</@roles>
+		<div>
+			<input type="text" placeholder="起始日期" name="gt_create_time" class="col-sm-1 form-datetime" value='${RequestParameters["gt_create_time"]!}'>
+			<input type="text" placeholder="截止日期" name="lt_create_time" class="col-sm-1 form-datetime" value='${RequestParameters["lt_create_time"]!}'>
+		</div>
 		<button class="btn btn-white list-search">
 			<i class="ace-icon fa fa-search"></i>查询</button>
 		<button class="btn btn-white btn-success list-open" type="button" data-url="${base}/daily/log/add.html">
