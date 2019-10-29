@@ -40,7 +40,8 @@ public class StaffLoginFilter extends AuthenticationFilter {
         boolean rememberMe = isRememberMe(request);
         String host = getHost(request);
         String captchaCode = request.getParameter("captcha");
+        String requestIP = SysUtils.getRemoteIp((HttpServletRequest) request);
         //使用自定义token
-        return new CaptchaInToken(username, password, host, rememberMe, captchaCode);
+        return new CaptchaInToken(username, password, rememberMe, host, captchaCode, requestIP);
     }
 }

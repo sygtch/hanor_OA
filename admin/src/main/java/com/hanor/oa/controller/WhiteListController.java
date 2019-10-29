@@ -73,14 +73,5 @@ public class WhiteListController extends BaseController {
 		return whiteListService.edit(whitelist);
 	}
 
-	@At
-	@GET
-	@RequiresPermissions("white.list.delete")
-	@Desc("登录账户白名单.删除")
-	@Ok(HtmlViewMaker.VIEW_JSON)
-	public Object delete(@Param("sys_user_id") Integer sys_user_id) {
-		dao.delete(WhiteList.class, sys_user_id);
-		return Result.ok();
-	}
 
 }

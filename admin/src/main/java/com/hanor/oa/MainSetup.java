@@ -31,13 +31,11 @@ public class MainSetup extends AbstractSetup {
         //对表的更改级别设置
         Daos.migration(dao, SysRole.class, true, false, false);
 
-
         int deptIsExisted = dao.count(SysRole.class, Cnd.where(SysRole.ROLE_ID,"=","dept"));
         int userIsExisted = dao.count(SysRole.class, Cnd.where(SysRole.ROLE_ID,"=","dept"));
         int adminIpIsExisted = dao.count(WhiteList.class,Cnd.where(WhiteList.USER_NAME,"=", SysConfig.SYS_ROLE));
 
         SysRolePermissionService sysRolePermissionService =ioc.get(SysRolePermissionService.class);
-
         // 初始化新增角色
         if (deptIsExisted == 0) {
             sysRolePermissionService.addRole("dept","部门经理");
