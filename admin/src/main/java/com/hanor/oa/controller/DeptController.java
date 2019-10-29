@@ -25,7 +25,7 @@ public class DeptController extends BaseController {
 	@At
 	@GET
 	@RequiresPermissions("dept.list")
-	@Desc("dept.下拉列表")
+	@Desc("部门.下拉列表")
 	@Ok(HtmlViewMaker.VIEW_JSON)
 	public Object select(){
 		return dao.query(Dept.class, SysUtils.autoCnd(Dept.class).orderBy("sort_no","asc"));
@@ -34,7 +34,7 @@ public class DeptController extends BaseController {
 	@At
 	@GET
 	@RequiresPermissions("dept.list")
-	@Desc("dept.列表")
+	@Desc("部门.列表")
 	public Object list(@Attr(scope= Scope.SESSION, value= SysConfig.SYS_USER_ID)int user_id) throws AlertException {
 		return deptService.list(user_id);
 	}
@@ -42,7 +42,7 @@ public class DeptController extends BaseController {
 	@At
 	@POST
 	@RequiresPermissions("dept.add")
-	@Desc("dept.添加")
+	@Desc("部门.添加")
 	@Ok(HtmlViewMaker.VIEW_JSON)
 	public Object add(@Param("..") Dept dept) throws AlertException {
 		return deptService.add(dept);
@@ -51,7 +51,7 @@ public class DeptController extends BaseController {
 	@At
 	@GET
 	@RequiresPermissions("dept.edit")
-	@Desc("dept.编辑")
+	@Desc("部门.编辑")
 	public Object edit(@Param("dept_id") Integer dept_id) {
 		return dao.fetch(Dept.class, dept_id);
 	}
@@ -59,7 +59,7 @@ public class DeptController extends BaseController {
 	@At
 	@POST
 	@RequiresPermissions("dept.edit")
-	@Desc("dept.编辑")
+	@Desc("部门.编辑")
 	@Ok(HtmlViewMaker.VIEW_JSON)
 	public Object save(@Param("..") Dept dept) throws AlertException {
 
@@ -69,7 +69,7 @@ public class DeptController extends BaseController {
 	@At
 	@GET
 	@RequiresPermissions("dept.delete")
-	@Desc("dept.删除")
+	@Desc("部门.删除")
 	@Ok(HtmlViewMaker.VIEW_JSON)
 	public Object delete(@Param("dept_id") Integer dept_id) throws AlertException {
 		return deptService.delete(dept_id);

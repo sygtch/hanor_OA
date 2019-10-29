@@ -27,7 +27,7 @@ public class StaffController extends BaseController {
 	@At
 	@GET
 	@RequiresPermissions("staff.list")
-	@Desc("staff.列表")
+	@Desc("员工.列表")
 	@Ok(HtmlViewMaker.VIEW_JSON)
 	public Object select(){
 		return dao.query(SysRole.class,SysUtils.autoCnd(SysRole.class));
@@ -36,7 +36,7 @@ public class StaffController extends BaseController {
 	@At
 	@GET
 	@RequiresPermissions("staff.list")
-	@Desc("staff.列表")
+	@Desc("员工.列表")
 	public Object list(@Attr(scope= Scope.SESSION, value= SysConfig.SYS_USER_ID)int staff_id) {
 		return Result.pagerList(Staff.class, SysUtils.autoCnd(Staff.class));
 	}
@@ -44,7 +44,7 @@ public class StaffController extends BaseController {
 	@At
 	@POST
 	@RequiresPermissions("staff.add")
-	@Desc("staff.添加")
+	@Desc("员工.添加")
 	@Ok(HtmlViewMaker.VIEW_JSON)
 	public Object add(@Param("..") Staff staff) throws AlertException {
 		return staffService.addStaff(staff);

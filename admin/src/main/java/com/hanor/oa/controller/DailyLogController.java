@@ -26,7 +26,7 @@ public class DailyLogController extends BaseController {
 	@At
 	@GET
 	@RequiresPermissions("daily.log.list")
-	@Desc("daily_log.列表")
+	@Desc("工作日志.列表")
 	public Object list(@Attr(scope= Scope.SESSION, value= SysConfig.SYS_USER_ID)int staff_id,
 					   @Attr(scope= Scope.SESSION, value= Constants.DEPT_ID)int dept_id) throws AlertException {
 		return dailyLogService.list(staff_id,dept_id);
@@ -35,7 +35,7 @@ public class DailyLogController extends BaseController {
 	@At
 	@POST
 	@RequiresPermissions("daily.log.add")
-	@Desc("daily_log.添加")
+	@Desc("工作日志.添加")
 	@Ok(HtmlViewMaker.VIEW_JSON)
 	public Object add(@Param("..") DailyLog dailylog,
 					  @Attr(scope= Scope.SESSION, value= SysConfig.SYS_USER_ID)int sys_user_id,
@@ -54,7 +54,7 @@ public class DailyLogController extends BaseController {
 	@At
 	@GET
 	@RequiresPermissions("daily.log.info")
-	@Desc("daily_log.详情")
+	@Desc("工作日志.详情")
 	public Object edit(@Param("log_id") Integer log_id) {
 		return dao.fetch(DailyLog.class, log_id);
 	}

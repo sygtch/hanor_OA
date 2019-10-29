@@ -3,15 +3,18 @@
 	<form class="col-xs-12" style="margin-bottom: 8px" action="">
 		<input type="hidden" name="page" value=''>
 		<input type="hidden" name="menu" value='${RequestParameters["menu"]!}'>
+		<div class="col-sm-1 no-padding">
+			<select class="form-select form-control" name="eq_staff_type" value='${RequestParameters["eq_staff_type"]!}' url="${base}/staff/select" n="role_name" v="role_id">
+				<option value="">全部岗位</option>
+			</select>
+		</div>
+		<div class="col-sm-1 no-padding">
+			<select class="form-select form-control" name="eq_dept_id" value='${RequestParameters["eq_dept_id"]!}' url="${base}/dept/select" n="dept_name" v="dept_id" >
+				<option value="">全部部门</option>
+			</select>
+		</div>
 		<input type="text" placeholder="搜索员工名" class="col-xs-1"  name="like_staff_name" value='${RequestParameters["like_staff_name"]!}'>
 		<input type="text" placeholder="搜索员工电话" class="col-xs-1"  name="eq_staff_phone" value='${RequestParameters["eq_staff_phone"]!}'>
-		<select class="col-sm-5 form-select form-input" name="eq_staff_type" url="${base}/staff/select" n="role_name" v="role_id" style="width: 120px">
-			<option value="">全部</option>
-		</select>
-
-		<select class="col-sm-5 form-select form-input" name="eq_dept_id" url="${base}/dept/select" n="dept_name" v="dept_id" style="width: 120px">
-			<option value="">全部</option>
-		</select>
 		<button class="btn btn-white list-search">
 			<i class="ace-icon fa fa-search"></i>查询</button>
 		<button class="btn btn-white btn-success list-open" type="button" data-url="${base}/staff/add.html">
