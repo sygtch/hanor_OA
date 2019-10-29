@@ -1,0 +1,50 @@
+<#include "/common/header.html">
+<div class="row">
+	<form class="col-xs-12" style="margin-bottom: 8px" action="">
+		<input type="hidden" name="page" value=''>
+		<input type="hidden" name="menu" value='${RequestParameters["menu"]!}'>
+		<input type="text" placeholder="请设置查询条件" class="col-xs-1"  name="eq_params" value='${RequestParameters["eq_params"]!}'>
+		<button class="btn btn-white list-search">
+			<i class="ace-icon fa fa-search"></i>查询</button>
+		<button class="btn btn-white btn-success list-open" type="button" data-url="${base}/white/list/add.html">
+			<i class="ace-icon fa fa-plus"></i>新增</button>
+		<div class="btn-group pull-right">
+			<button data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle" aria-expanded="true">
+			查看
+				<i class="ace-icon fa fa-angle-down icon-on-right"></i>
+			</button>
+			<ul class="dropdown-menu list-cole-dis">
+			</ul>
+		</div>
+	</form>
+	<div class="col-xs-12">
+		<table id="simple-table" class="table  table-hover">
+			<thead>
+				<tr>
+					<th name="sys_user_id">登录账户ID</th>
+					<th name="user_name">用户名称</th>
+					<th name="white_ips">ip白名单</th>
+					<th name="create_time">创建时间</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+	
+			<tbody>
+			<#list obj.list as r>
+				<tr>
+					<td>${r.sys_user_id!}</td>
+					<td>${r.user_name!}</td>
+					<td>${r.white_ips!}</td>
+					<td>${r.create_time!}</td>
+					<td>
+						<button class="btn btn-white btn-info list-open" data-url="${base}/white/list/edit?sys_user_id=${r.sys_user_id}">
+							<i class="ace-icon fa fa-pencil"></i>编辑</button>
+					</td>
+				</tr>
+				</#list>
+			</tbody>
+		</table>
+	</div>
+	<#include "/common/pager.html">
+</div><!-- /.row -->
+<#include "/common/footer.html">

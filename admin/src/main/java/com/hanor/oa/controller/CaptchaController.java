@@ -31,6 +31,7 @@ public class CaptchaController {
                 .build();
         String text = captcha.getAnswer();
         session.setAttribute("captcha", text);
+        System.out.println("验证码：" + text);
         return captcha.getImage();
     }
 }

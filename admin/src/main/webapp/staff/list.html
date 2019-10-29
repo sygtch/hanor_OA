@@ -5,12 +5,12 @@
 		<input type="hidden" name="menu" value='${RequestParameters["menu"]!}'>
 		<input type="text" placeholder="搜索员工名" class="col-xs-1"  name="like_staff_name" value='${RequestParameters["like_staff_name"]!}'>
 		<input type="text" placeholder="搜索员工电话" class="col-xs-1"  name="eq_staff_phone" value='${RequestParameters["eq_staff_phone"]!}'>
-		<select class="col-sm-5 form-select form-input" name="staff_type" url="${base}/staff/select" n="role_name" v="role_id">
-			<option>全部</option>
+		<select class="col-sm-5 form-select form-input" name="eq_staff_type" url="${base}/staff/select" n="role_name" v="role_id" style="width: 120px">
+			<option value="">全部</option>
 		</select>
 
-		<select class="col-sm-5 form-select form-input" name="dept_id" url="${base}/dept/select" n="dept_name" v="dept_id">
-			<option>全部</option>
+		<select class="col-sm-5 form-select form-input" name="eq_dept_id" url="${base}/dept/select" n="dept_name" v="dept_id" style="width: 120px">
+			<option value="">全部</option>
 		</select>
 		<button class="btn btn-white list-search">
 			<i class="ace-icon fa fa-search"></i>查询</button>
