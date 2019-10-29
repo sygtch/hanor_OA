@@ -25,7 +25,7 @@ public class DeptServiceImpl implements DeptService {
     @Override
     public Object list(Integer user_id) throws AlertException {
         if (null == user_id){
-            return Result.fail("无权限访问");
+            throw new AlertException("无权限访问");
         }
         List<SysUserRole> sysUserRoles = dao.query(SysUserRole.class,Cnd.where(SysUserRole.USER_ID,"=",user_id));
 
