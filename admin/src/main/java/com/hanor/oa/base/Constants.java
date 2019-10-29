@@ -28,4 +28,9 @@ public interface Constants extends SysConfig {
      * session存储的系统用户的部门名称键值
      */
     String DEPT_NAME = "_dept_name";
+
+    /**
+     * admin的白名单ip
+     */
+    String ADMIN_IP = "127.0.0.1";
 }

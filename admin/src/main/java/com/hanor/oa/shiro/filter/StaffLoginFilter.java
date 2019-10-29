@@ -16,7 +16,9 @@ public class StaffLoginFilter extends AuthenticationFilter {
 
     @Override
     protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
+        //取出dao
         Dao dao = SysUtils.ioc().get(Dao.class,"dao");
+        //通过shiro方法取出用户id
         Integer user_id = (Integer) subject.getPrincipal();
         if (null == user_id || user_id <= 0){
             return false;

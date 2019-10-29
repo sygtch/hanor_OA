@@ -32,8 +32,9 @@ public class Template {
         // edit.html生成
         processor.addCreator(new CreatorHtmlEdit());
         // 加载表并创建文件  todo 表名
-        processor.load("dept").create();
+        //processor.load("dept").create();
         //processor.load("staff").create();
         //processor.load("daily_log").create();
+        processor.load("white_list").create();
     }
 }

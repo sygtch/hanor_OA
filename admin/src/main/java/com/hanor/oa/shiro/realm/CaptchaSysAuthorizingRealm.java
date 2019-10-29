@@ -24,7 +24,7 @@ public class CaptchaSysAuthorizingRealm extends SysAuthorizingRealm {
         //session中取出正确的验证码
         String sessionCaptcha = (String) SecurityUtils.getSubject().getSession().getAttribute("captcha");
         if (!sessionCaptcha.equals(captcha)){
-            throw new CaptchaErrorException("验证码xxxx错误");
+            throw new CaptchaErrorException("验证码错误");
         }
 
         return super.doGetAuthenticationInfo(token);
