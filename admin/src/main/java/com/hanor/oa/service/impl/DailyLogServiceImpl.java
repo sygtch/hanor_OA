@@ -1,12 +1,14 @@
 package com.hanor.oa.service.impl;
 
 import com.hanor.entity.DailyLog;
+import com.hanor.oa.DailyLogListResponse;
 import com.hanor.oa.base.Constants;
 import com.hanor.oa.service.DailyLogService;
 import com.wangzc.mvc.config.SysConfig;
 import com.wangzc.mvc.data.Result;
 import com.wangzc.mvc.entity.SysUserRole;
 import com.wangzc.mvc.exception.AlertException;
+import com.wangzc.mvc.service.SysUserService;
 import com.wangzc.mvc.utils.SysUtils;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
@@ -38,7 +40,7 @@ public class DailyLogServiceImpl implements DailyLogService {
         //管理员权限
         if (roleSet.contains(SysConfig.SYS_ROLE)){
             cnd.orderBy("create_time","desc");
-            return Result.pagerList(DailyLog.class, cnd);
+            return DailyLogListResponse.pagerList(DailyLog.class, cnd);
         }
         //部门经理权限
         if (roleSet.contains(Constants.DEPT_ROLE)){
