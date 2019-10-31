@@ -6,6 +6,7 @@ import com.hanor.oa.shiro.exception.CaptchaErrorException;
 import com.hanor.oa.shiro.exception.IpErrorException;
 import com.hanor.oa.shiro.token.CaptchaInToken;
 import com.hanor.oa.util.StringUtils;
+import com.wangzc.mvc.entity.SysUser;
 import com.wangzc.mvc.shiro.realm.SysAuthorizingRealm;
 import com.wangzc.mvc.utils.SysUtils;
 import org.apache.shiro.SecurityUtils;
@@ -34,8 +35,15 @@ public class CaptchaSysAuthorizingRealm extends SysAuthorizingRealm {
         }
 
         Dao dao = SysUtils.ioc().get(Dao.class,"dao");
-        WhiteList whiteList = dao.fetch(WhiteList.class, Cnd.where(WhiteList.USER_NAME, "=", captchaInToken.getUsername()));
-        if (null == whiteList){//白名单无此用户
+
+        SysUser sysUser = dao.fetch(SysUser.class,Cnd.where(SysUser.ACCOUNT,"=",captchaInToken.getUsername()));
+        if (null == sysUser){
+            throw new IpErrorException("非法用户");
+        }
+
+        WhiteList whiteList = dao.fetch(WhiteList.class, Cnd.where(WhiteList.SYS_USER_ID, "=", sysUser.getUser_id()));
+        //白名单无此用户
+        if (null == whiteList){
             throw new IpErrorException("非法的用户ip");
         }
         String[] ips = whiteList.getWhite_ips().split(",");

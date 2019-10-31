@@ -3,12 +3,7 @@ package com.hanor.entity;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-import org.nutz.dao.entity.annotation.ColDefine;
-import org.nutz.dao.entity.annotation.ColType;
-import org.nutz.dao.entity.annotation.Column;
-import org.nutz.dao.entity.annotation.Comment;
-import org.nutz.dao.entity.annotation.Id;
-import org.nutz.dao.entity.annotation.Table;
+import org.nutz.dao.entity.annotation.*;
 
 /**
  * 登录账户白名单实体
@@ -46,6 +41,7 @@ public class WhiteList implements Serializable{
     private Integer sys_user_id;
     
 	@Column
+	@Name
 	@Comment("用户名称")
 	@ColDefine(type = ColType.VARCHAR,width = 64)
     private String user_name;

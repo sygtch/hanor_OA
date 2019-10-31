@@ -22,9 +22,9 @@ public class MainSetup extends AbstractSetup {
     protected void init(NutConfig nc, Ioc ioc) throws AlertException {
 
         // 初始化角色和权限
-        Init.add(new InitRoleAndPermission("com.hanor"));
+        Init.add(new InitRoleAndPermission(MainModule.GROUP_SCAN));
         // 初始化数据库表和字段
-        Init.add(new InitTable("com.hanor"));
+        Init.add(new InitTable(MainModule.GROUP_SCAN));
 
         //取dao
         Dao dao = ioc.get(Dao.class);
@@ -33,7 +33,7 @@ public class MainSetup extends AbstractSetup {
 
         int deptIsExisted = dao.count(SysRole.class, Cnd.where(SysRole.ROLE_ID,"=","dept"));
         int userIsExisted = dao.count(SysRole.class, Cnd.where(SysRole.ROLE_ID,"=","dept"));
-        int adminIpIsExisted = dao.count(WhiteList.class,Cnd.where(WhiteList.USER_NAME,"=", SysConfig.SYS_ROLE));
+        int adminIpIsExisted = dao.count(WhiteList.class,Cnd.where(WhiteList.USER_NAME,"=", Constants.ADMIN_NAME));
 
         SysRolePermissionService sysRolePermissionService =ioc.get(SysRolePermissionService.class);
         // 初始化新增角色

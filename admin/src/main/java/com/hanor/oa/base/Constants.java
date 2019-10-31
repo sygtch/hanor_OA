@@ -33,4 +33,9 @@ public interface Constants extends SysConfig {
      * admin的白名单ip
      */
     String ADMIN_IP = "127.0.0.1";
+
+    /**
+     * admin的用户名
+     */
+    String ADMIN_NAME = "超级管理员";
 }
